@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bagas Febriyanto — Interactive Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF8F3;
+    --paper-shade:#F1EDE3;
+    --ink:#1C2B39;
+    --ink-soft:#51606C;
+    --accent:#2F6F5E;
+    --accent-warm:#B8763B;
+    --rule:#DBD5C6;
+    --max:760px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px; transition: color 0.2s; }
+  a:hover{ color:var(--accent-warm); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent-warm); outline-offset:3px; }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  /* Nav Sticky & Blur */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(250,248,243,0.92);
+    backdrop-filter:saturate(140%) blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  nav .name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.05rem;
+    letter-spacing:0.01em;
+  }
+  nav .links{ display:flex; gap:22px; }
+  nav .links a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    font-size:0.92rem;
+  }
+  nav .links a:hover{ color:var(--accent); }
+
+  /* Hero Animations */
+  header.hero{ padding:76px 0 56px; }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(2.1rem, 5vw, 3.1rem);
+    line-height:1.12;
+    margin:0 0 22px;
+    max-width:14ch;
+    opacity:0;
+    animation:rise 700ms ease-out 80ms forwards;
+  }
+  .hero p.lede{
+    max-width:56ch;
+    color:var(--ink-soft);
+    font-size:1.08rem;
+    margin:0 0 30px;
+    opacity:0;
+    animation:rise 700ms ease-out 220ms forwards;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .contact-line{
+    display:flex; flex-wrap:wrap; gap:6px 14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    margin-bottom:40px;
+  }
+  .contact-line a{ color:var(--ink-soft); }
+  .contact-line a:hover{ color:var(--accent); }
+
+  /* Stat Cards Interactive */
+  .stat-row{
+    display:flex; flex-wrap:wrap;
+    border-top:1px solid var(--rule);
+  }
+  .stat{
+    flex:1 1 160px;
+    padding:16px 18px;
+    border-bottom:1px solid var(--rule);
+    transition: background 0.3s, transform 0.2s;
+    cursor: default;
+  }
+  .stat:hover{
+    background: var(--paper-shade);
+    transform: translateY(-2px);
+  }
+  .stat .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.5rem;
+    color:var(--accent-warm);
+    display:block;
+  }
+  .stat .label{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+  }
+
+  /* Sections */
+  section{ padding:52px 0; border-top:1px solid var(--rule); }
+  section h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.5rem;
+    margin:0 0 24px;
+  }
+
+  /* Proof of Work Grid & Modal Triggers */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .gallery-card {
+    background: var(--paper-shade);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .gallery-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+  }
+  .gallery-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid var(--rule);
+  }
+  .gallery-card .info {
+    padding: 12px;
+  }
+  .gallery-card .title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .gallery-card .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(28, 43, 57, 0.85);
+    backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active {
+    opacity: 1; pointer-events: auto;
+  }
+  .modal-content {
+    background: var(--paper);
+    padding: 24px; max-width: 700px; width: 90%;
+    border-radius: 6px; position: relative;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-content img {
+    width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--rule);
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 16px;
+    background: none; border: none; font-size: 1.5rem;
+    cursor: pointer; color: var(--ink);
+  }
+
+  /* Ledger Interactive Row */
+  .ledger{ border-top:1px solid var(--rule); margin:20px 0 22px; }
+  .ledger-row{
+    display:flex; gap:18px; align-items:baseline;
+    padding:14px 12px; border-bottom:1px solid var(--rule);
+    transition: background 0.2s;
+  }
+  .ledger-row:hover{
+    background: var(--paper-shade);
+  }
+  .ledger-row .figure{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.05rem;
+    color:var(--accent);
+    flex:0 0 74px;
+  }
+
+  /* Skills Filter Tabs */
+  .filter-tabs {
+    display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: none; border: 1px solid var(--rule);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem;
+    padding: 6px 12px; cursor: pointer; border-radius: 3px;
+    color: var(--ink-soft); transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+  }
+  .skill-group { transition: opacity 0.3s; }
+  .hidden { display: none; }
+
+  /* Contact Button */
+  .btn{
+    display:inline-block;
+    background:var(--ink); color:var(--paper);
+    font-family:'IBM Plex Mono', monospace; font-size:0.88rem;
+    padding:12px 20px; text-decoration:none; transition: background 0.2s;
+  }
+  .btn:hover{ background:var(--accent); color:var(--paper); }
+
+  footer{ padding:28px 0 40px; color:var(--ink-soft); font-size:0.82rem; border-top:1px solid var(--rule); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="name">Bagas Febriyanto</div>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#proof">Proof of Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Data operations, precise where it counts.</h1>
+    <p class="lede">Management graduate who spent 1.8 years keeping Telkomsel's regional sales numbers honest — routes redesigned, reports delivered on time, targets tracked to the percentage point.</p>
+    <div class="contact-line">
+      <a href="mailto:bagasfebrianto18@gmail.com">bagasfebrianto18@gmail.com</a>
+      <span>·</span>
+      <a href="tel:+6282280739251">+62 822-8073-9251</a>
+      <span>·</span>
+      <span>Cilegon City, Banten</span>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><span class="num">3.90</span><span class="label">GPA, Management</span></div>
+      <div class="stat"><span class="num">1.8 yrs</span><span class="label">Sales &amp; ops admin</span></div>
+      <div class="stat"><span class="num">100%</span><span class="label">Daily report accuracy</span></div>
+      <div class="stat"><span class="num">900 hrs</span><span class="label">Data &amp; AI training</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2>About</h2>
+    <p>I graduated from Universitas Serang Raya with a degree in Management and a GPA of 3.90, then spent 1.8 years inside Telkomsel's regional sales operations as an Administrative Support Officer. The work was focused on operational efficiency: a visit schedule that made sense for 28 reps, highly accurate daily reporting, and field issue breakdown.</p>
+    <p>I also completed a 900-hour data analytics and software development program with RevoU, bridging the gap between field administration and modern data visualization tools like BigQuery and Looker Studio.</p>
+  </div>
+</section>
+
+<!-- INTERACTIVE PROOF OF WORK SECTION -->
+<section id="proof">
+  <div class="wrap">
+    <h2>Interactive Showcase / Proof of Work</h2>
+    <p style="color:var(--ink-soft); font-size:0.92rem;">Klik kartu di bawah ini untuk melihat pratinjau bukti dokumen &amp; laporan riil:</p>
+    
+    <div class="gallery-grid">
+      <!-- Card 1 -->
+      <div class="gallery-card" onclick="openModal('image_12e768.png', 'Report Monitoring KPI Regional Sales', 'Mengolah data harian Sales SA, VF, Omset, hingga Rank TAP secara tepat dengan akurasi 100%.')">
+        <img src="image_12e768.png" alt="Report Monitoring KPI">
+        <div class="info">
+          <div class="title">KPI Monitoring Report</div>
+          <div class="tag">Excel / Google Sheets</div>
+        </div>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="gallery-card" onclick="openModal('image_12e79f.png', 'Daily Morning Briefing & Evaluation', 'Memimpin briefing pagi bersama tim sales untuk memantau KPI harian dan rencana kerja.')">
+        <img src="image_12e79f.png" alt="Morning Briefing">
+        <div class="info">
+          <div class="title">Morning Briefing Session</div>
+          <div class="tag">Sales Operations</div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="gallery-card" onclick="openModal('image_12ebdd.png', 'Sales Dashboard Vending Machine', 'Dashboard interaktif Looker Studio untuk pemantauan penjualan dan revenue secara visual.')">
+        <img src="image_12ebdd.png" alt="Looker Studio Dashboard">
+        <div class="info">
+          <div class="title">Looker Studio Dashboard</div>
+          <div class="tag">RevoU Data Analytics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience</h2>
+    <div class="job-head">
+      <div>
+        <div class="job-title" style="font-weight:600;">Administrative Support Officer</div>
+        <div style="color:var(--ink-soft);">Strategic Business Partner Telkomsel</div>
+      </div>
+      <div style="font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--ink-soft);">1.8 years</div>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="figure">25%</div>
+        <div class="desc">Increase in visit efficiency after redesigning the schedule for 28 sales reps across 3 cities (43 sub-districts).</div>
+      </div>
+      <div class="ledger-row">
+        <div class="figure">10%</div>
+        <div class="desc">Minimum growth targeted per region through a data-driven intervention program for underperforming areas.</div>
+      </div>
+      <div class="ledger-row">
+        <div class="figure">10–14</div>
+        <div class="desc">Sales and regional performance reports prepared daily, held to 100% data accuracy.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS WITH INTERACTIVE TABS -->
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills &amp; Capabilities</h2>
+    
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="filterSkills('all', this)">All</button>
+      <button class="tab-btn" onclick="filterSkills('ops', this)">Operations</button>
+      <button class="tab-btn" onclick="filterSkills('tools', this)">Tools &amp; Tech</button>
+      <button class="tab-btn" onclick="filterSkills('lang', this)">Languages</button>
+    </div>
+
+    <div class="skill-group" id="skill-ops">
+      <p><strong>Operations:</strong> Data administration, SOP compliance, data accuracy, cross-functional coordination, route optimization.</p>
+    </div>
+    <div class="skill-group" id="skill-tools">
+      <p><strong>Tools:</strong> Excel, Google Sheets, BigQuery, Looker Studio, Canva, Word, PowerPoint.</p>
+    </div>
+    <div class="skill-group" id="skill-lang">
+      <p><strong>Languages:</strong> Indonesian (native), English (intermediate, TOEFL 510, Grade A).</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <div style="display:flex; justify-style:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <p style="margin:0; color:var(--ink-soft);">Based in Cilegon City, Banten — open to relocation.</p>
+      <a class="btn" href="mailto:bagasfebrianto18@gmail.com">Email Me</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Bagas Febriyanto — last updated September 2026.</div>
+</footer>
+
+<!-- MODAL COMPONENT -->
+<div class="modal-overlay" id="imageModal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <img id="modalImg" src="" alt="Detail View">
+    <h3 id="modalTitle" style="font-family:'Fraunces', serif; margin:16px 0 8px;"></h3>
+    <p id="modalDesc" style="color:var(--ink-soft); font-size:0.92rem; margin:0;"></p>
+  </div>
+</div>
+
+<script>
+  // Modal Handler
+  function openModal(imgSrc, title, desc) {
+    document.getElementById('modalImg').src = imgSrc;
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('imageModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('imageModal').classList.remove('active');
+  }
+
+  // Interactive Skill Filter
+  function filterSkills(category, btn) {
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    const ops = document.getElementById('skill-ops');
+    const tools = document.getElementById('skill-tools');
+    const lang = document.getElementById('skill-lang');
+
+    if (category === 'all') {
+      ops.classList.remove('hidden');
+      tools.classList.remove('hidden');
+      lang.classList.remove('hidden');
+    } else if (category === 'ops') {
+      ops.classList.remove('hidden');
+      tools.classList.add('hidden');
+      lang.classList.add('hidden');
+    } else if (category === 'tools') {
+      ops.classList.add('hidden');
+      tools.classList.remove('hidden');
+      lang.classList.add('hidden');
+    } else if (category === 'lang') {
+      ops.classList.add('hidden');
+      tools.classList.add('hidden');
+      lang.classList.remove('hidden');
+    }
+  }
+</script>
+
+</body>
+</html>
