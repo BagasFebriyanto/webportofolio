@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bagas Febriyanto — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF8F3;
+    --paper-shade:#F1EDE3;
+    --ink:#1C2B39;
+    --ink-soft:#51606C;
+    --accent:#2F6F5E;
+    --accent-warm:#B8763B;
+    --rule:#DBD5C6;
+    --max:760px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation:none !important; transition:none !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px; }
+  a:hover{ color:var(--accent-warm); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent-warm); outline-offset:3px; }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  /* Nav */
+  nav{
+    position:sticky; top:0; z-index:10;
+    background:rgba(250,248,243,0.92);
+    backdrop-filter:saturate(140%) blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  nav .name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.05rem;
+    letter-spacing:0.01em;
+  }
+  nav .links{ display:flex; gap:22px; }
+  nav .links a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    font-size:0.92rem;
+  }
+  nav .links a:hover{ color:var(--accent); }
+
+  @media (max-width:560px){
+    nav .wrap{ flex-wrap:wrap; row-gap:10px; padding-top:14px; padding-bottom:14px; }
+    nav .name{ font-size:0.98rem; }
+    nav .links{ gap:12px; width:100%; }
+    nav .links a{ font-size:0.8rem; }
+  }
+
+  /* Hero */
+  header.hero{ padding:76px 0 56px; }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(2.1rem, 5vw, 3.1rem);
+    line-height:1.12;
+    margin:0 0 22px;
+    max-width:14ch;
+    opacity:0;
+    animation:rise 700ms ease-out 80ms forwards;
+  }
+  .hero p.lede{
+    max-width:56ch;
+    color:var(--ink-soft);
+    font-size:1.08rem;
+    margin:0 0 30px;
+    opacity:0;
+    animation:rise 700ms ease-out 220ms forwards;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .contact-line{
+    display:flex; flex-wrap:wrap; gap:6px 14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    margin-bottom:40px;
+  }
+  .contact-line a{ color:var(--ink-soft); }
+  .contact-line a:hover{ color:var(--accent); }
+
+  .stat-row{
+    display:flex; flex-wrap:wrap;
+    border-top:1px solid var(--rule);
+  }
+  .stat{
+    flex:1 1 160px;
+    padding:16px 18px 16px 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .stat .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.5rem;
+    color:var(--accent-warm);
+    display:block;
+  }
+  .stat .label{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+  }
+
+  /* Sections */
+  section{ padding:52px 0; border-top:1px solid var(--rule); }
+  section h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.5rem;
+    margin:0 0 24px;
+  }
+  section .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+    display:block;
+  }
+
+  .about p{ max-width:64ch; margin:0 0 16px; }
+
+  /* Experience */
+  .job-head{
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline;
+    gap:6px 16px; margin-bottom:6px;
+  }
+  .job-title{ font-weight:600; font-size:1.05rem; }
+  .job-org{ color:var(--ink-soft); margin:0 0 20px; }
+  .job-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  .ledger{ border-top:1px solid var(--rule); margin:20px 0 22px; }
+  .ledger-row{
+    display:flex; gap:18px; align-items:baseline;
+    padding:14px 0; border-bottom:1px solid var(--rule);
+  }
+  .ledger-row .figure{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.05rem;
+    color:var(--accent);
+    flex:0 0 74px;
+  }
+  .ledger-row .desc{ color:var(--ink-soft); font-size:0.96rem; }
+
+  .job-notes{ margin:0; padding-left:20px; color:var(--ink-soft); }
+  .job-notes li{ margin-bottom:8px; }
+
+  /* Leadership */
+  .role{
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 16px;
+    padding:16px 0; border-bottom:1px solid var(--rule);
+  }
+  .role:first-child{ border-top:1px solid var(--rule); }
+  .role-main{ max-width:56ch; }
+  .role-title{ font-weight:600; }
+  .role-org{ color:var(--ink-soft); font-size:0.94rem; }
+  .role-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  /* Education / training table */
+  .edu-item{ margin-bottom:26px; }
+  .edu-item .job-title{ margin-bottom:2px; }
+
+  table.training{
+    width:100%; border-collapse:collapse;
+    font-size:0.92rem;
+    margin-top:6px;
+  }
+  table.training th{
+    text-align:left;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:500;
+    font-size:0.76rem;
+    color:var(--ink-soft);
+    padding:8px 10px 8px 0;
+    border-bottom:1px solid var(--ink);
+  }
+  table.training td{
+    padding:10px 10px 10px 0;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+  table.training td.score{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--accent-warm);
+    white-space:nowrap;
+  }
+  table.training td.hours{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  /* Skills */
+  .skills p{ max-width:66ch; color:var(--ink-soft); }
+  .skills strong{ color:var(--ink); font-weight:600; }
+
+  /* Contact */
+  .contact-block{
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px;
+  }
+  .contact-block p{ max-width:44ch; color:var(--ink-soft); margin:0; }
+  .btn{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.88rem;
+    padding:12px 20px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+  .btn:hover{ background:var(--accent); color:var(--paper); }
+
+  footer{
+    padding:28px 0 40px;
+    color:var(--ink-soft);
+    font-size:0.82rem;
+    border-top:1px solid var(--rule);
+  }
+
+  @media (max-width:560px){
+    header.hero{ padding:52px 0 40px; }
+    section{ padding:40px 0; }
+    .ledger-row{ gap:12px; }
+    .ledger-row .figure{ flex-basis:58px; font-size:0.95rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="name">Bagas Febriyanto</div>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Data operations, precise where it counts.</h1>
+    <p class="lede">Management graduate who spent 1.8 years keeping Telkomsel's regional sales numbers honest — routes redesigned, reports delivered on time, targets tracked to the percentage point.</p>
+    <div class="contact-line">
+      <a href="mailto:bagasfebrianto18@gmail.com">bagasfebrianto18@gmail.com</a>
+      <span>·</span>
+      <a href="tel:+6282280739251">+62 822-8073-9251</a>
+      <span>·</span>
+      <span>Cilegon City, Banten</span>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><span class="num">3.90</span><span class="label">GPA, Management</span></div>
+      <div class="stat"><span class="num">1.8 yrs</span><span class="label">Sales &amp; ops admin</span></div>
+      <div class="stat"><span class="num">100%</span><span class="label">Daily report accuracy</span></div>
+      <div class="stat"><span class="num">900 hrs</span><span class="label">Data &amp; AI training</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="about">
+  <div class="wrap">
+    <h2>About</h2>
+    <p>I graduated from Universitas Serang Raya with a degree in Management and a GPA of 3.90, then spent the next year and a half inside Telkomsel's regional sales operations as an Administrative Support Officer. The work was rarely about big strategy — it was about getting the small things right every single day: a visit schedule that actually made sense for 28 reps, a report that had to be accurate before anyone could act on it, a field issue that needed turning into a plan.</p>
+    <p>Alongside that, I was selected for the government's Kampus Merdeka Independent Study Program (MSIB), where I led a small team, and I've stayed close to community organizing through UKM E-Sport. I also completed a 900-hour data analytics and AI-assisted development program at RevoU, which is where the tables below come from.</p>
+    <p>Right now I'm looking at roles in data administration, sales operations, or marketing support — anywhere precision and follow-through actually matter.</p>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience</h2>
+
+    <div class="job-head">
+      <div>
+        <div class="job-title">Administrative Support Officer</div>
+        <div class="job-org">Strategic Business Partner Telkomsel</div>
+      </div>
+      <div class="job-date">1.8 years</div>
+    </div>
+
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="figure">25%</div>
+        <div class="desc">Increase in visit efficiency after redesigning the schedule for 28 sales reps across 3 cities (43 sub-districts).</div>
+      </div>
+      <div class="ledger-row">
+        <div class="figure">10%</div>
+        <div class="desc">Minimum growth targeted per region through a data-driven intervention program for underperforming areas.</div>
+      </div>
+      <div class="ledger-row">
+        <div class="figure">10–14</div>
+        <div class="desc">Sales and regional performance reports prepared daily, held to 100% data accuracy.</div>
+      </div>
+      <div class="ledger-row">
+        <div class="figure">Daily</div>
+        <div class="desc">Morning briefings run with the sales team to track KPIs, commitments, and priorities.</div>
+      </div>
+    </div>
+
+    <ul class="job-notes">
+      <li>Broke down operational issues from team performance evaluations and presented recommendations to the Team Leader.</li>
+      <li>Processed and visualized data in Excel, Google Sheets, BigQuery, and Looker Studio; presented findings in Canva, Word, and PowerPoint.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="leadership">
+  <div class="wrap">
+    <h2>Leadership &amp; organizations</h2>
+
+    <div class="role">
+      <div class="role-main">
+        <div class="role-title">Team Leader, Independent Study Project</div>
+        <div class="role-org">Kampus Merdeka — Studi Independen Bersertifikat (MSIB), Ministry of Education</div>
+      </div>
+      <div class="role-date">6 months</div>
+    </div>
+
+    <div class="role">
+      <div class="role-main">
+        <div class="role-title">Event Committee Chair</div>
+        <div class="role-org">UKM E-Sport — community tournament, 32 teams / 160 participants</div>
+      </div>
+      <div class="role-date">—</div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <h2>Education &amp; training</h2>
+
+    <div class="edu-item">
+      <div class="job-title">Bachelor's Degree in Management</div>
+      <div class="job-org">Universitas Serang Raya · GPA 3.90 · Graduated 2025</div>
+    </div>
+
+    <div class="edu-item">
+      <div class="job-title">Data Analytics &amp; Software Development with AI</div>
+      <div class="job-org">RevoU Teach Academy · Overall score 94/100 (A) · 900 hours</div>
+      <table class="training">
+        <thead>
+          <tr><th>Module</th><th>Score</th><th>Hours</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Data Processing in Data Analytics</td><td class="score">90/100</td><td class="hours">200</td></tr>
+          <tr><td>Data Visualization &amp; Communication with AI Tools</td><td class="score">90/100</td><td class="hours">200</td></tr>
+          <tr><td>Intro to Web Development</td><td class="score">90/100</td><td class="hours">200</td></tr>
+          <tr><td>Front-End Development with AI Tools</td><td class="score">100/100</td><td class="hours">260</td></tr>
+          <tr><td>Career Development</td><td class="score">100/100</td><td class="hours">40</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="skills">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <p><strong>Operations:</strong> Data administration, SOP compliance, data accuracy, cross-functional coordination, critical thinking.</p>
+    <p><strong>Tools:</strong> Excel, Google Sheets, BigQuery, Looker Studio, Canva, Word, PowerPoint.</p>
+    <p><strong>Languages:</strong> Indonesian (native), English (intermediate, TOEFL 510, Grade A).</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <div class="contact-block">
+      <p>Open to roles in data administration, sales operations, and marketing support. Based in Cilegon City, Banten — open to relocation.</p>
+      <a class="btn" href="mailto:bagasfebrianto18@gmail.com">Email me</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Bagas Febriyanto — last updated September 2026.</div>
+</footer>
+
+</body>
+</html>
